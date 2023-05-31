@@ -1,33 +1,50 @@
 const { Schema, model } = require('mongoose');
-const assignmentSchema = require('./Assignment');
+const reactionSchema = require('./Reaction');
 
-// Schema to create Student model
-const studentSchema = new Schema(
+// Schema to create thought model
+const thoughtSchema = new Schema(
   {
-    first: {
+    thoughtText: {
       type: String,
       required: true,
-      max_length: 50,
+      min_length: 1,
+      max_length: 280,
     },
-    last: {
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    username: {
       type: String,
       required: true,
-      max_length: 50,
     },
-    github: {
-      type: String,
-      required: true,
-      max_length: 50,
-    },
-    assignments: [assignmentSchema],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
-      getters: true,
+      virtuals: true,
     },
   }
 );
 
-const Student = model('student', studentSchema);
+// Create a virtual property `formattedCreatedAt` that Use a getter method to format the timestamp on query
+thoughtSchema
+  .virtual('formattedCreatedAt')
+  .get(function () {
+    const date = this.createdAt;
+    const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}
+      /${date.getDate().toString().padStart(2, '0')}
+      /${date.getFullYear()}`;
+    return formattedDate;
+  });
 
-module.exports = Student;
+// Create a virtual property `reactionCount` that retrieves the length of the thought's reactions array field on query
+thoughtSchema
+  .virtual('reactionCount')
+  .get(function () {
+    return this.reactions.length;
+  });
+
+const Thought = model('thought', thoughtSchema);
+
+module.exports = Thought;
