@@ -1,22 +1,19 @@
 const { Schema, Types } = require('mongoose');
 
-const assignmentSchema = new Schema(
+const reactionSchema = new Schema(
   {
-    assignmentId: {
+    reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    assignmentName: {
+    reactionBody: {
       type: String,
       required: true,
-      maxlength: 50,
-      minlength: 4,
-      default: 'Unnamed assignment',
+      maxlength: 280,
     },
-    score: {
-      type: Number,
+    username: {
+      type: String,
       required: true,
-      default: () => Math.floor(Math.random() * (100 - 70 + 1) + 70),
     },
     createdAt: {
       type: Date,
@@ -25,10 +22,21 @@ const assignmentSchema = new Schema(
   },
   {
     toJSON: {
-      getters: true,
+      virtuals: true,
     },
     id: false,
   }
 );
 
-module.exports = assignmentSchema;
+// Create a virtual property `formattedCreatedAt` that Use a getter method to format the timestamp on query
+reactionSchema
+  .virtual('formattedCreatedAt')
+  .get(function () {
+    const date = this.createdAt;
+    const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}
+      /${date.getDate().toString().padStart(2, '0')}
+      /${date.getFullYear()}`;
+    return formattedDate;
+  });
+
+module.exports = reactionSchema;
