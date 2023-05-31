@@ -1,0 +1,24 @@
+{
+  "name": "nosql-socialnetworkapi",
+  "version": "1.0.0",
+  "description": "API using Express.js and Mongoose",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xybai0103/NoSQL-socialNetworkAPI.git"
+  },
+  "author": "xybai0103",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xybai0103/NoSQL-socialNetworkAPI/issues"
+  },
+  "homepage": "https://github.com/xybai0103/NoSQL-socialNetworkAPI#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^7.0.2"
+  }
+}
