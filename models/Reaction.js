@@ -23,6 +23,10 @@ const reactionSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
+      transform: function (doc, ret) {
+        delete ret.createdAt; // Remove the original 'createdAt' property from the result
+        return ret;
+      },
     },
     id: false,
   }
@@ -32,10 +36,10 @@ const reactionSchema = new Schema(
 reactionSchema
   .virtual('formattedCreatedAt')
   .get(function () {
-    const date = this.createdAt;
-    const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}
-      /${date.getDate().toString().padStart(2, '0')}
-      /${date.getFullYear()}`;
+    const date = new Date(this.createdAt);
+    const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-US', options);
+  
     return formattedDate;
   });
 
