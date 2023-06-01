@@ -31,7 +31,7 @@
 
   Please have a look at the walkthrough video demonstrating the functionality of this social network API:
 
-  Video link: https://drive.google.com/file/d/11q8AKeyiJNXyWKyENldVyd8hI3_V5ZN3/view
+  Video link: https://drive.google.com/file/d/1OWGiVBhUgdCwrAP02mFN_s7AawpsT1ET/view
   
   ## Installation
 
